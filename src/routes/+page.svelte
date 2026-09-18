@@ -12,7 +12,8 @@
             method: "POST",
             body: JSON.stringify({
                 endpoint: `games`,
-                query: `
+                query: 
+                    `
                     fields *; 
                     where name = "Minecraft";
                     `

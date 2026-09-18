@@ -14,8 +14,6 @@ export async function POST({ request }) {
     // );
 
     const data = await request.json()
-    console.log("HEJ")
-    console.log(data)
     const response = await igdb(
         data.endpoint,
         data.query

@@ -1,5 +1,7 @@
 <script>
     let { params } = $props()
+
+    
 </script>
 
 <h1>HIIII</h1>
