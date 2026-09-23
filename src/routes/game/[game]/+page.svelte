@@ -3,31 +3,19 @@
     import { onMount } from "svelte";
 
     async function getGame() {
-        return await fetch("/API/games", {
+        const resp = await fetch("/API/IGDB", {
             method: "POST",
             body: JSON.stringify({
                 endpoint: "games",
                 query: 
                     `
-                    fields *; 
-                    search "${params.game}";
+                    fields name, cover.image_id; 
+                    where name = "${params.game}";
                     `
             })
-        }).then(response => response.json()).then(data => {return data});
-    }
+        });
 
-    async function getCover(gameID: number) {
-        return await fetch("/API/games", {
-            method: "POST",
-            body: JSON.stringify({
-                endpoint: "covers",
-                query: 
-                    `
-                    fields *;
-                    where game = ${gameID};
-                    `
-            })
-        }).then(response => response.json()).then(data => {return data})
+        return resp.json();
     }
 </script>
 
@@ -38,5 +26,6 @@
         <h3 class="text-danger text-center">Could not find game named "{params.game}" :/</h3>
     {:else}
         <p>{data[0].name}</p>
+        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{data[0].cover.image_id}.webp" class="rounded float-start img-fluid" alt="Game Cover">
     {/if}    
 {/await}
