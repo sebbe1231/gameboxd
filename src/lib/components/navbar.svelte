@@ -5,7 +5,6 @@
 
     function searchGame() {
         goto(`/search/${encodeURIComponent(gameName)}`)
-        // window.location.href = `./search/${encodeURIComponent(gameName)}`;
     }
 </script>
 

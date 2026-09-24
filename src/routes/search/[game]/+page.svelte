@@ -34,14 +34,14 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     let { params } = $props()
-    import { onMount } from "svelte";
+
+    import missing_thumbnail from "$lib/assets/missing_thumbnail.png";
 
     let gameName = $state("")
 
 
     function searchGame() {
         goto(`/search/${encodeURIComponent(gameName)}`)
-        // window.location.href = `./search/${encodeURIComponent(gameName)}`;
     }
 
     async function getGame() {
@@ -74,53 +74,21 @@
         </form>
     </div>
 
-    <!-- <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4 ">
-                <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co7n02.webp" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="d-flex justify-content-center">
-        <div class="d-flex justify-content-start align-items-center bg-body-secondary border border-2 rounded w-50 h-25">
-            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co7n02.webp" class="rounded-start border-end border-2 object-fit-scale" style="height:3em" alt="..." >
-            <div class="ps-2">
-                lol
-            </div>
-            <div class="ms-auto px-2">
-                <div class="px-2 py-1 rounded-pill border border-2 border-light bg-light">
-                    2019
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="d-flex align-items-center">
-        <div class="flex-shrink-0">
-            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co7n02.webp" alt="...">
-        </div>
-        <div class="flex-grow-1 ms-3">
-            This is some content from a media component. You can replace this with any content and adjust it as needed.
-        </div>
-    </div> -->
 {#await getGame()}
     <p>Loading...</p>
 {:then data} 
     {#if data[0]}
         {#each data as game}
-            <!-- <p><a href="/game/{encodeURIComponent(game.name)}">{game.name} ({new Date(game.first_release_date * 1000).getFullYear()})</a></p>
-            {console.log(game)} -->
-            <div class="d-flex justify-content-center mb-2">
-                <div class="d-flex justify-content-start align-items-center bg-body-secondary border border-2 rounded w-50 h-25">
-                    <img src="https://images.igdb.com/igdb/image/upload/t_thumb/{game.cover.image_id}.webp" class="rounded-start border-end border-2 object-fit-scale" style="height:3em" alt="..." >
+            <div class="d-flex justify-content-center mb-2" >
+                <div class="d-flex position-relative justify-content-start align-items-center bg-body-secondary border border-2 rounded w-50 h-25">
+                    {#if game.cover}
+                        <img src="https://images.igdb.com/igdb/image/upload/t_thumb/{game.cover.image_id}.webp" class="rounded-start border-end border-2 object-fit-scale" style="height:3em" alt="..." >
+                    {:else}
+                        <img src={missing_thumbnail} class="rounded-start border-end border-2 object-fit-scale" style="height:3em" alt="..." >
+                    {/if}
+                    
                     <div class="ps-2">
-                        {game.name}
+                        <a href="/game/{game.id}" class="stretched-link text-dark " style="text-decoration: none;">{game.name}</a>
                     </div>
                     <div class="ms-auto px-2">
                         <div class="px-2 py-1 rounded-pill border border-2 border-light bg-light">
