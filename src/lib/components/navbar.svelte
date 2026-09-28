@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { user } from "$lib/state.svelte";
 
     let gameName = $state("")
 
@@ -23,7 +24,7 @@
                     <button class="btn btn-primary" type="submit">Button</button>
                 </div>
             </form>
-            <span class="text-light mx-3 text-center">user</span>
+            <span class="text-light mx-3 text-center">{user.name}</span>
         </div>
         
     </div>    

@@ -3,7 +3,7 @@
     import missing_image from "$lib/assets/missing_image.png";
 
     async function getGame() {
-        const resp = await fetch("/API/IGDB", {
+        const resp = await fetch("/api/IGDB", {
             method: "POST",
             body: JSON.stringify({
                 endpoint: "games",

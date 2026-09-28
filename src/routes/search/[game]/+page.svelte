@@ -45,7 +45,7 @@
     }
 
     async function getGame() {
-        return await fetch("/API/IGDB", {
+        return await fetch("/api/IGDB", {
             method: "POST",
             body: JSON.stringify({
                 endpoint: "games",

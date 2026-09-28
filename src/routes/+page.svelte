@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { user } from "$lib/state.svelte";
     let gameName = $state("")
 
     function searchGame() {
@@ -7,7 +8,7 @@
     }
 
     async function getPopular() {
-        const resp = await fetch("/API/IGDB", {
+        const resp = await fetch("/api/IGDB", {
             method: "POST",
             body: JSON.stringify({
                 endpoint: "games",
@@ -28,7 +29,7 @@
     async function getNew() {
         let date = Math.floor(Date.now() / 1000) 
 
-        const resp = await fetch("/API/IGDB", {
+        const resp = await fetch("/api/IGDB", {
             method: "POST",
             body: JSON.stringify({
                 endpoint: "games",
@@ -69,7 +70,7 @@
         {:then games} 
             {console.log(games)}
             {#each games as game}
-                <div class="card col m-3" style="padding-left: 0px; padding-right: 0px;">
+                <div class="card col m-3"  style="padding-left: 0px; padding-right: 0px;">
                 <div class="card-header">
                     {Math.round(game.rating * 100) / 100}/100 ({game.rating_count} reviews)
                 </div>
@@ -99,7 +100,9 @@
                     {releaseDate.getDate()}/{releaseDate.getMonth() + 1} - {releaseDate.getFullYear()}
                 </div>
                     <div class="card-body p-0 text-bg-secondary rounded">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" class="card-img-top" alt="...">
+                        <div class="game-image">
+                            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" style="" class="card-img-top" alt="...">
+                        </div>
 
                         <p class="card-text px-2 py-2 text-nowrap text-truncate">
                             <a href="/game/{game.id}" class="stretched-link text-light " style="text-decoration: none;">{game.name}</a>
@@ -110,4 +113,11 @@
             {/each}
         {/await}
     </div>
+
+    {user.name}
+    {user.id}
 </div>
+
+<style>
+    @import "./styles.css";
+</style>

@@ -1,0 +1,13 @@
+.game-image {
+    width: 100%;
+    aspect-ratio: 264 / 352;
+    background-color: black;
+    overflow: hidden;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
