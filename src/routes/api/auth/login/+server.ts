@@ -6,13 +6,14 @@ import { failed, success } from "$lib/utils/response.js";
 import jwt from 'jsonwebtoken';
 import { env } from "$env/dynamic/private";
 import type { APIResponse } from "$lib/utils/response.js";
+import bcrypt from "bcrypt";
 
 export async function POST({ request }){
 
     const req = await request.json();
 
     try {
-        const dbCall = await db.select().from(userTable).where(and(eq(userTable.name, req.name ), eq(userTable.password, req.password)));
+        const dbCall = await db.select().from(userTable).where(and(eq(userTable.name, req.name), eq(userTable.password, req.password)));
 
         if(dbCall.length !== 0) {
             const token = jwt.sign({id: dbCall[0].id, name: dbCall[0].name}, env.JWT_KEY)

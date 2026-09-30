@@ -3,6 +3,9 @@
     import { user } from "$lib/state.svelte";
     let gameName = $state("")
 
+    import missing_image from "$lib/assets/missing_image.png";
+
+
     function searchGame() {
         goto(`./search/${encodeURIComponent(gameName)}`)
     }
@@ -101,7 +104,11 @@
                 </div>
                     <div class="card-body p-0 text-bg-secondary rounded">
                         <div class="game-image">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" style="" class="card-img-top" alt="...">
+                            {#if game.cover}
+                                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" style="" class="card-img-top" alt="...">
+                            {:else}
+                                <img src="{missing_image}" style="" class="card-img-top" alt="...">
+                            {/if}
                         </div>
 
                         <p class="card-text px-2 py-2 text-nowrap text-truncate">
