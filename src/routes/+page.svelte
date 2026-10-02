@@ -1,6 +1,5 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { user } from "$lib/state.svelte";
     let gameName = $state("")
 
     import missing_image from "$lib/assets/missing_image.png";
@@ -74,11 +73,14 @@
             {console.log(games)}
             {#each games as game}
                 <div class="card col m-3"  style="padding-left: 0px; padding-right: 0px;">
-                <div class="card-header">
-                    {Math.round(game.rating * 100) / 100}/100 ({game.rating_count} reviews)
-                </div>
                     <div class="card-body p-0 text-bg-secondary rounded">
                         <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" class="card-img-top" alt="...">
+                        <div class="card-img-overlay pt-2">
+                            <div class="d-flex justify-content-between">
+                                <span class="badge rounded-pill text-bg-info ms-1">{Math.round(game.rating * 100) / 100}%</span>
+                                <span class="badge rounded-pill text-bg-info me-1">{game.rating_count} 📝</span>
+                            </div>
+                        </div>
 
                         <p class="card-text px-2 py-2 text-nowrap text-truncate">
                             <a href="/game/{game.id}" class="stretched-link text-light " style="text-decoration: none;">{game.name}</a>
@@ -98,17 +100,19 @@
             {console.log(games)}
             {#each games as game}
                 <div class="card col m-3" style="padding-left: 0px; padding-right: 0px;">
-                <div class="card-header">
-                    {let releaseDate = new Date(game.first_release_date * 1000)}
-                    {releaseDate.getDate()}/{releaseDate.getMonth() + 1} - {releaseDate.getFullYear()}
-                </div>
                     <div class="card-body p-0 text-bg-secondary rounded">
-                        <div class="game-image">
+                        <div class="game-image rounded">
                             {#if game.cover}
                                 <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" style="" class="card-img-top" alt="...">
                             {:else}
                                 <img src="{missing_image}" style="" class="card-img-top" alt="...">
                             {/if}
+                            <div class="card-img-overlay pt-2">
+                                <div class="d-flex justify-content-center">
+                                    {let releaseDate = new Date(game.first_release_date * 1000)}
+                                    <span class="badge rounded-pill text-bg-info ms-1">{releaseDate.getDate()}/{releaseDate.getMonth() + 1}/{releaseDate.getFullYear()}</span>
+                                </div>
+                            </div>
                         </div>
 
                         <p class="card-text px-2 py-2 text-nowrap text-truncate">
@@ -120,9 +124,6 @@
             {/each}
         {/await}
     </div>
-
-    {user.name}
-    {user.id}
 </div>
 
 <style>

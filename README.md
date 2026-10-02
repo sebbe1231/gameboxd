@@ -11,6 +11,9 @@ letterboxd for games.... yea
 ### drizzle studio
     - npx drizzle-kit studio
 
+### better auth
+    - npm run auth:schema
+
 ### Svelte Doc
 #### SvelteKit
 - https://svelte.dev/docs/kit/introduction
@@ -25,3 +28,14 @@ https://getbootstrap.com/docs/5.3/getting-started/introduction/
 
 ### Drizzle Doc
 https://orm.drizzle.team/docs/overview
+
+### Better Auth Doc
+https://better-auth.com/docs
+
+## Stack
+    - Svelte
+    - Sveltekit
+    - Bootstrap
+    - Drizzle ORM
+    - Postgresql
+    - Better Auth

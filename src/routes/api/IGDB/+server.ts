@@ -3,16 +3,6 @@ import { igdb } from "$lib/server/igdb";
 
 export async function POST({ request }) {
 
-
-    // Request body data structure
-    // const response = await igdb(
-    //     "games",
-    //     `
-    //     fields *;
-    //     where name = "Minecraft";
-    //     `
-    // );
-
     const data = await request.json()
     const response = await igdb(
         data.endpoint,
