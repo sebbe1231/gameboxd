@@ -9,7 +9,8 @@ import { user } from './auth.schema';
 // });
 
 export const collectionTable = pgTable("collection", 
-    {
+    {   
+        id: integer().primaryKey().generatedAlwaysAsIdentity(),
         gameId: integer().notNull(),
         userId: text().notNull().references(() => user.id, { onDelete: "cascade" }),
         createdAt: timestamp().defaultNow().notNull()

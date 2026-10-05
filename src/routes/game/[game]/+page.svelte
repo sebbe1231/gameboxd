@@ -29,7 +29,7 @@
 
 
     async function addToCollection() {
-        const resp = await fetch("/api/addCollection", {
+        const resp = await fetch("/api/collection/add", {
             method: "POST",
             body: JSON.stringify({
                 gameId: params.game
@@ -37,6 +37,55 @@
         })
 
         const data = await resp.json()
+
+        if(data.success) {
+            toast.fire({
+                icon: "success",
+                title: data.message
+            })
+        }
+        else {
+            toast.fire({
+                icon: "error",
+                title: data.message
+            })
+        }
+    }
+
+    async function getCollection() {
+        const resp = await fetch("/api/collection/get", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: "jqYGwmPQ1RE5mtpgdwpf1JKrtQGMGdeB",
+                gameId: params.game
+            })
+        })
+        
+        const data = await resp.json();
+
+        if(data.success) {
+            toast.fire({
+                icon: "success",
+                title: data.message
+            })
+        }
+        else {
+            toast.fire({
+                icon: "error",
+                title: data.message
+            })
+        }
+    }
+
+    async function removeCollection() {
+        const resp = await fetch("/api/collection/remove", {
+            method: "POST",
+            body: JSON.stringify({
+                gameId: params.game
+            })
+        })
+
+        const data = await resp.json();
 
         if(data.success) {
             toast.fire({
@@ -60,24 +109,28 @@
     {#if !game[0]}
         <h3 class="text-danger text-center">Could not find game with ID {params.game} :/</h3>
     {:else}
-    
+        {console.log(game[0])}
         <h3 class="text-center">{game[0].name}</h3>
-        {let releaseDate = new Date(game[0].first_release_date * 1000)}
-        <p>{releaseDate.getDate()}/{releaseDate.getMonth() + 1}/{releaseDate.getFullYear()}</p>
+        {#if game[0].first_release_date}
+            {let releaseDate = new Date(game[0].first_release_date * 1000)}
+            <p>{releaseDate.getDate()}/{releaseDate.getMonth() + 1}/{releaseDate.getFullYear()}</p>
+        {:else}
+            <p>No release date</p>
+        {/if}
+
     <div class="row">
+        <div class="col-sm-4 d-flex justify-content-center">
+            {#if game[0].cover}
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game[0].cover.image_id}.webp" class="rounded float-start img-fluid" alt="Game Cover">
+            {:else}
+                <img src="{missing_image}" class="rounded float-start img-fluid" alt="Game Cover">
+            {/if}
+        </div>
         <div class="col-sm-8">
             <ul class="list-group">
                 <li class="list-group-item active">Game summary</li>
-                <li class="list-group-item">{game[0].summary}</li>
+                <li class="list-group-item">{game[0].summary ? game[0].summary : "No Summary"}</li>
             </ul>
-            <button type="button" class="btn btn-primary" onclick={addToCollection}>Add to collection</button>
-        </div>
-        <div class="col-sm-4 d-flex justify-content-center">
-        {#if game[0].cover}
-            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game[0].cover.image_id}.webp" class="rounded float-start img-fluid" alt="Game Cover">
-        {:else}
-            <img src="{missing_image}" class="rounded float-start img-fluid" alt="Game Cover">
-        {/if}
         </div>
     </div>
     {/if}    

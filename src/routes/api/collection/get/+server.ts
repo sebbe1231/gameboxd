@@ -1,12 +1,18 @@
-import { json } from "@sveltejs/kit";
+// Get all collection for specific game
+
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
 import { collectionTable } from "$lib/server/db/schema";
 import { success, failed } from "$lib/utils/response.js";
-import { DrizzleError, DrizzleQueryError } from "drizzle-orm";
+import {  and, DrizzleQueryError, eq } from "drizzle-orm";
+
+type CollectionData = {
+    userId: string | null;
+    gameId: number | null;
+}
 
 export async function POST({ request }) {
-    const data = await request.json()
+    const data: CollectionData = await request.json()
 
     const session = await auth.api.getSession({
         headers: request.headers
@@ -17,9 +23,12 @@ export async function POST({ request }) {
     }    
     
     try {
-        const dbInsert = await db.insert(collectionTable).values({gameId: data.gameId, userId: session.user.id}).returning()
+        const collection = await db.select().from(collectionTable).where(and(
+            data.userId ? eq(collectionTable.userId, data.userId): undefined,
+            data.gameId ? eq(collectionTable.gameId, data.gameId): undefined
+        ))
 
-        return(success(dbInsert, "Game added to collection", 200))
+        return(success(collection, "Query succesful", 200))
     }
     catch(e: any) {
         if(e instanceof DrizzleQueryError && (e.cause as { code?: string }).code === "23502") {

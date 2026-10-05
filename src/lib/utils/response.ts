@@ -4,10 +4,10 @@ export interface APIResponse {
     success: boolean;
     message: string | null;
     data?: any;
-    status?: number;
+    status: number;
 }
 
-export const failed = (msg: string, status = 400) => {
+export const failed = (msg: string, status: number) => {
     return new Response(JSON.stringify({
         success: false,
         message: msg
@@ -18,7 +18,7 @@ export const failed = (msg: string, status = 400) => {
     })
 }
 
-export const success = (data: any = null, msg: any = null, status = 200) => {
+export const success = (data: any = null, msg: any = null, status: number) => {
     return new Response(JSON.stringify({
         success: true,
         message: msg,
