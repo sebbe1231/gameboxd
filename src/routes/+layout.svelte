@@ -11,5 +11,8 @@
 
 <Navbar />
 
+<style>
+    @import "./styles.css";
+</style>
 
 {@render children()}

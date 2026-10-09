@@ -35,7 +35,7 @@
     }
         
     function searchGame() {
-        goto(`/search/${encodeURIComponent(gameName)}`)
+        goto(`/search/game/${encodeURIComponent(gameName)}`)
         gameName = "";
     }
 </script>

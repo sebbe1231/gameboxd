@@ -20,7 +20,7 @@ export async function POST({ request }) {
     try {
         const collection = await db.delete(collectionTable).where(and(eq(collectionTable.gameId, data.gameId), eq(collectionTable.userId, session.user.id)))
 
-        return(success(collection, "Query succesful", 200))
+        return(success(collection, "Game Removed", 200))
     }
     catch(e: any) {
         if(e instanceof DrizzleQueryError && (e.cause as { code?: string }).code === "23502") {

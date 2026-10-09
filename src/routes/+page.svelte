@@ -6,7 +6,7 @@
 
 
     function searchGame() {
-        goto(`./search/${encodeURIComponent(gameName)}`)
+        goto(`./search/game/${encodeURIComponent(gameName)}`)
     }
 
     async function getPopular() {
@@ -70,9 +70,8 @@
         {#await getPopular()}
             <p>Loading games...</p>
         {:then games} 
-            {console.log(games)}
             {#each games as game}
-                <div class="card col m-3"  style="padding-left: 0px; padding-right: 0px;">
+                <div class="card col m-3 hover-object" style="padding-left: 0px; padding-right: 0px;">
                     <div class="card-body p-0 text-bg-secondary rounded">
                         <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game.cover.image_id}.webp" class="card-img-top" alt="...">
                         <div class="card-img-overlay pt-2">
@@ -97,9 +96,8 @@
         {#await getNew()}
             <p>Loading games...</p>
         {:then games} 
-            {console.log(games)}
             {#each games as game}
-                <div class="card col m-3" style="padding-left: 0px; padding-right: 0px;">
+                <div class="card col m-3 hover-object" style="padding-left: 0px; padding-right: 0px;">
                     <div class="card-body p-0 text-bg-secondary rounded">
                         <div class="game-image rounded">
                             {#if game.cover}
@@ -126,6 +124,3 @@
     </div>
 </div>
 
-<style>
-    @import "./styles.css";
-</style>
