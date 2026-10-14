@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { page } from "$app/state";
     import { authClient } from "$lib/auth-client";
     import Swal from "sweetalert2";
 
@@ -35,33 +35,47 @@
     }
         
     function searchGame() {
-        goto(`/search/game/${encodeURIComponent(gameName)}`)
+        let searchParams = page.url.searchParams;
+        searchParams.delete("name")
+        searchParams.append("name", gameName);
+
+        location.href = `/search?${searchParams}`;
         gameName = "";
     }
 </script>
 
-<nav class="navbar bg-dark">
+<nav class="navbar bg-dark navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand mb-0 h1 text-light" href="/">Gameboxd</a>
+        <a class="navbar-brand text-light" href="/">Gameboxd</a>
 
-        
-        <div class="d-flex align-items-center">
+        <button class="navbar-toggler border-light" data-bs-theme="dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/search">Search</a>
+                </li>
+            </ul>
+
             <form onsubmit={e => {
-                e.preventDefault();
-                searchGame();
-            }}>
+                    e.preventDefault();
+                    searchGame();
+                }}>
                 <div class="input-group">
                     <input bind:value={gameName} id="gameInput" type="text" class="form-control" placeholder="Game name">
                     <button class="btn btn-primary" type="submit">Button</button>
                 </div>
             </form>
+
             <div class="text-center ms-3">
                 {#if $session.isPending}
                     <span class="text-light">Loading...</span>
                 {:else if $session.data}
                     <div class="dropdown">
                         <button class="btn dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                             {$session.data?.user.name}
+                            {$session.data?.user.name}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end text-center">
                             <li><a href="/user" class="text-dark" style="text-decoration: none;">Profile</a></li>

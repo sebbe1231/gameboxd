@@ -39,3 +39,7 @@ https://better-auth.com/docs
     - Drizzle ORM
     - Postgresql
     - Better Auth
+
+
+    Query Parameter Routing (/search?q=...):
+Create a search page at src/routes/search/+page.svelte (or handle search parameters on the home page src/routes/+page.svelte). Read search queries from page.url.searchParams.

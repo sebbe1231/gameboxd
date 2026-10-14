@@ -1,12 +1,16 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { page } from "$app/state";
     let gameName = $state("")
 
     import missing_image from "$lib/assets/missing_image.png";
 
 
     function searchGame() {
-        goto(`./search/game/${encodeURIComponent(gameName)}`)
+        let searchParams = page.url.searchParams
+        searchParams.append("name", gameName)
+
+        goto(`/search?${searchParams}`)
     }
 
     async function getPopular() {

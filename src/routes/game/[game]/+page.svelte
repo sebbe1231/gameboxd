@@ -183,28 +183,28 @@
                 <li class="list-group-item">{game[0].summary ? game[0].summary : "No Summary"}</li>
                 <li class="list-group-item d-flex justify-content-center px-0 text-center">
                     <div class="row w-100">
-                        <div class="col-4 border-end">
+                        <div class="col-sm-4 border-end">
                             <h6>Genres</h6>
                             <div class="d-flex flex-wrap justify-content-center">
                                 {#each game[0].genres as genre}
-                                <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search/genre/{genre.id}" style="text-decoration: none;">{genre.name}</a>
+                                <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search?tag={(1 << 28) | genre.id}" style="text-decoration: none;">{genre.name}</a>
                                 {/each}
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <h6>Themes</h6>
                             <div class="d-flex flex-wrap justify-content-center">
                                 {#each game[0].themes as theme}
-                                <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search/theme/{theme.id}" style="text-decoration: none;">{theme.name}</a>
+                                <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search?tag={(0 << 28) | theme.id}" style="text-decoration: none;">{theme.name}</a>
                                 {/each}
                             </div>
                         </div>
-                        <div class="col-4 border-start">
+                        <div class="col-sm-4 border-start">
                             <h6>Keywords</h6>
                             <div class="collapse mb-2" id="keywordCollapse">
                                 <div class="d-flex flex-wrap justify-content-center">
                                     {#each game[0].keywords as keyword}
-                                    <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search/keyword/{keyword.id}" style="text-decoration: none;">{keyword.name}</a>
+                                    <a class="border rounded-pill text-center overflow-hidden px-2 mt-1 hover-object text-dark" href="/search?tag={(2 << 28) | keyword.id}" style="text-decoration: none;">{keyword.name}</a>
                                     {/each}
                                 </div>
                             </div>
