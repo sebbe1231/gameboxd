@@ -1,15 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { authClient } from "$lib/auth-client";
-    import Swal from "sweetalert2";
-
-    const toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-    });
+    import { toast } from "$lib/helpers"
 
     let username = $state("");
     let password = $state("");

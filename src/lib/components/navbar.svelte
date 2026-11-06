@@ -1,19 +1,11 @@
 <script lang="ts">
     import { page } from "$app/state";
     import { authClient } from "$lib/auth-client";
-    import Swal from "sweetalert2";
+    import { toast } from "$lib/helpers"
 
     let gameName = $state("")
 
     const session = authClient.useSession();
-
-    const toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-    });
 
     async function signOut() {
         await authClient.signOut({

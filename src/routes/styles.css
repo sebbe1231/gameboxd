@@ -21,3 +21,9 @@
   -webkit-transform: scale(0.99); /* Safari */
   transform: scale(0.99);
 }
+
+.hover-remove-object:hover {
+    transform: scale(1.01);
+    text-decoration: line-through;
+    background-color:red !important;
+}

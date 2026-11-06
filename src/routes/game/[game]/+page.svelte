@@ -1,21 +1,13 @@
 <script lang="ts">
     let { params } = $props()
     import missing_image from "$lib/assets/missing_image.png";
-    import Swal from "sweetalert2";
+    import { toast } from "$lib/helpers"
     import backpack from "$lib/assets/backpack.svg";
     import { authClient } from "$lib/auth-client.js";
 
     let hasGame = $state(false);
     let totalCollection = $state(0);
     let keywordToggle = $state(false);
-
-    const toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-    });
 
     async function getGame() {
         const resp = await fetch("/api/IGDB", {
@@ -129,7 +121,6 @@
     {#if !game[0]}
         <h3 class="text-danger text-center">Could not find game with ID {params.game} :/</h3>
     {:else}
-        {console.log(game[0])}
         <h3 class="text-center">{game[0].name}</h3>
         {#if game[0].first_release_date}
             {let releaseDate = new Date(game[0].first_release_date * 1000)}
@@ -140,7 +131,7 @@
 
     <div class="row">
         <div class="col-sm-4 d-flex flex-column">
-            <div class="align-self-center">
+            <!-- <div class="align-self-center">
                 {#if game[0].cover}
                     <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game[0].cover.image_id}.webp" class="rounded float-start img-fluid" alt="Game Cover">
                 {:else}
@@ -162,20 +153,28 @@
             </div>
             <div class="">
                 <p>hej</p>
-            </div>
-
-
-            <!-- TODO make card body clicable/a button to add to collection -->
-            <!-- <div class="card align-self-center" style="width: 18rem;">
-                {#if game[0].cover}
-                    <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game[0].cover.image_id}.webp" class="rounded-top float-start img-fluid" alt="Game Cover">
-                {:else}
-                    <img src="{missing_image}" class="rounded-top float-start img-fluid" alt="Game Cover">
-                {/if}
-                <div class="card-body rounded-bottom text-bg-secondary">
-                    <h5 class="card-title">Card title</h5>
-                </div>
             </div> -->
+
+            <div class="card" style="width: 18rem;">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{game[0].cover.image_id}.webp" class="card-img-top" alt="...">
+                <div class="card-body">
+                    {#await getCollection()}
+                        <button type="button" class="btn btn-secondary rounded-pill text-dark">
+                            <img src="{backpack}" alt="..."> ...
+                        </button>
+                    {:then} 
+                        <button type="button" 
+                            class="btn {hasGame ? "btn-success" : "btn-secondary"} rounded-pill text-dark"  
+                            onclick={hasGame ?  removeCollection : addToCollection}>
+                            <img src="{backpack}" alt="..."> {totalCollection}
+                        </button>
+                    {/await}
+
+                    <hr>
+
+                    <p>More info and stuff down</p>
+                </div>
+            </div>
         </div>
         <div class="col-sm-8">
             <ul class="list-group">

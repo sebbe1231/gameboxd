@@ -8,7 +8,11 @@
 
     function searchGame() {
         let searchParams = page.url.searchParams
-        searchParams.append("name", gameName)
+
+        searchParams.delete("name")
+        if(gameName.length > 0) {
+            searchParams.append("name", gameName)
+        }
 
         goto(`/search?${searchParams}`)
     }
